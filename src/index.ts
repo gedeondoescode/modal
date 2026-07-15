@@ -11,8 +11,13 @@ const app: Express = express();
 const port = Number(process.env.PORT ?? 5000);
 
 // Must be set to work behind a reverse proxy system
-app.set("trust proxy", true);
-app.use(cors());
+app.set("trust proxy", 1);
+app.use(
+  cors({
+    origin: process.env.BETTER_AUTH_URL,
+    credentials: true,
+  }),
+);
 app.use(helmet());
 
 app.all("/rest/auth/{*any}", toNodeHandler(auth));

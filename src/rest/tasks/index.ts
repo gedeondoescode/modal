@@ -10,7 +10,7 @@ const taskRouter = Router();
 taskRouter.use(requireAuth);
 
 taskRouter.get("/:taskId", getTaskByIdHandler);
-taskRouter.post("/create", createTaskHandler);
+taskRouter.post("/", createTaskHandler);
 taskRouter.patch("/:taskId", updateTaskHandler);
 taskRouter.delete("/:taskId", deleteTaskHandler);
 

@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { taskTable, updateTaskSchema } from "../../../db/models/tasks.schema.ts";
 import { db } from "../../../db/index.ts";
 import { and, eq } from "drizzle-orm";
+import { withOverdueResponse } from "./overdue-response.ts";
 
 export const updateTaskHandler = async (req: Request<{ taskId: string }>, res: Response) => {
   const taskId = req.params.taskId;
@@ -19,7 +20,6 @@ export const updateTaskHandler = async (req: Request<{ taskId: string }>, res: R
     .update(taskTable)
     .set({
       ...parsed.data,
-      dateUpdated: new Date(),
     })
     .where(and(eq(taskTable.id, taskId), eq(taskTable.userId, req.auth.user.id)))
     .returning();
@@ -34,6 +34,6 @@ export const updateTaskHandler = async (req: Request<{ taskId: string }>, res: R
 
   return res.json({
     result: true,
-    data: task,
+    data: withOverdueResponse(task),
   });
 };

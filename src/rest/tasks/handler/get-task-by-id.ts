@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { db } from "../../../db/index.ts";
 import { taskTable } from "../../../db/models/tasks.schema.ts";
 import { and, eq } from "drizzle-orm";
+import { withOverdueResponse } from "./overdue-response.ts";
 
 export const getTaskByIdHandler = async (req: Request<{ taskId: string }>, res: Response) => {
   const taskId = req.params.taskId;
@@ -22,6 +23,6 @@ export const getTaskByIdHandler = async (req: Request<{ taskId: string }>, res: 
 
   return res.status(200).json({
     result: true,
-    data: task,
+    data: withOverdueResponse(task), // Add an overdue field if dueDate has value
   });
 };
