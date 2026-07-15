@@ -6,6 +6,10 @@ A task management API written in Express and TypeScript.
 
 Copy `.env.example` to `.env`
 
+```bash
+cp .env.example .env
+```
+
 Fill `BETTER_AUTH_SECRET=` with a base64 secret. You can generate one by running:
 
 ```bash
