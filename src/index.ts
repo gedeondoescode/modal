@@ -27,7 +27,7 @@ app.use(httpLogger);
 
 app.use("/rest", restRouter);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     result: true,
     message: "Health OK",
